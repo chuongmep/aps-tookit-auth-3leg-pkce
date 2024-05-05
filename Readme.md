@@ -18,6 +18,8 @@ This is opensource help question of PhatTran from LinkedIn : https://www.linkedi
 
 ![](docs/devenv_YkSog6T9ii.png)
 
+- Create a callback URL in the format `http://localhost:8080/api/auth/callback` and add it to the `Redirect URIs` in the application settings, and then add it to the `Resources.resx`
+
 - Debug the application and see the result
 
 ## Demo 
