@@ -1,0 +1,34 @@
+﻿<Window x:Class="aps_tookit_auth_3leg_pkce.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:aps_tookit_auth_3leg_pkce"
+        mc:Ignorable="d"
+        Title="Autodesk Auth PCKE" Height="300" Width="600">
+    <Grid Margin="5,5,5,5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Label Content="Click login to start:" ></Label>
+        <Button Margin="0,0,0,5"
+                Grid.Row="1"
+                x:Name="btnLogin"
+                Click="LoginOnClick"
+                Background="WhiteSmoke" 
+                Content="Login"/>
+        <Label Foreground="Red" Grid.Row="2" 
+               x:Name="lbnResult"></Label>
+        <Button Margin="0,0,0,5" 
+                Grid.Row="3"
+                x:Name="btnRefresh"
+                Click="RefreshTokenOnClick"
+                Background="WhiteSmoke" 
+                Content="Refresh Token"></Button>
+        <TextBox x:Name="tbxToken" Grid.Row="4" AllowDrop="True" TextWrapping="Wrap"></TextBox>
+    </Grid>
+</Window>
