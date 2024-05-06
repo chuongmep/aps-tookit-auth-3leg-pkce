@@ -23,12 +23,19 @@
                 Content="Login"/>
         <Label Foreground="Red" Grid.Row="2" 
                x:Name="lbnResult"></Label>
-        <Button Margin="0,0,0,5" 
-                Grid.Row="3"
-                x:Name="btnRefresh"
-                Click="RefreshTokenOnClick"
-                Background="WhiteSmoke" 
-                Content="Refresh Token"></Button>
+
+        <StackPanel Grid.Row="3" Orientation="Horizontal">
+            <Button Margin="0,0,0,5"
+                    Grid.Row="3"
+                    x:Name="btnRefresh"
+                    Click="RefreshTokenOnClick"
+                    Background="WhiteSmoke"
+                    Content="Refresh Token"></Button>
+            <Button Content="Get User Info"
+                    Margin="5,0,0,5"
+                    Background="WhiteSmoke"
+                    Click="GetUserInformationOnClick"></Button>
+        </StackPanel>
         <TextBox x:Name="tbxToken" Grid.Row="4" AllowDrop="True" TextWrapping="Wrap"></TextBox>
     </Grid>
 </Window>

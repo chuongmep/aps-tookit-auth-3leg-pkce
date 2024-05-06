@@ -40,8 +40,42 @@ namespace aps_tookit_auth_3leg_pkce
 			Global.codeVerifier = codeVerifier;
 			Global.ClientId = aps_tookit_auth_3leg_pkce.Resources.ClientId;
 			Global.CallbackURL = aps_tookit_auth_3leg_pkce.Resources.CallbackUrl;
-			redirectToLogin(codeChallenge);
+			RedirectToLogin(codeChallenge);
 			btnLogin.Content= "Proceed in the browser!";
+		}
+
+		/// <summary>
+		/// https://aps.autodesk.com/en/docs/profile/v1/reference/profile/oidcuserinfo/
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void GetUserInformationOnClick(object sender, RoutedEventArgs e)
+		{
+			if (string.IsNullOrEmpty(Global.AccessToken))
+			{
+				tbxToken.Text = "Please login first!";
+				return;
+			}
+			lbnResult.Content = "You can find your token below";
+			tbxToken.Text = Global.AccessToken;
+			// post request to get user information
+			var url = "https://api.userprofile.autodesk.com/userinfo";
+			var client = new HttpClient();
+			client.DefaultRequestHeaders.Add("Authorization", "Bearer " + Global.AccessToken);
+			var response = client.GetAsync(url).Result;
+			if (response.IsSuccessStatusCode)
+			{
+				var responseContent = response.Content;
+				string responseString = responseContent.ReadAsStringAsync().Result;
+				JObject responseJson = JObject.Parse(responseString);
+				tbxToken.Text = responseJson.ToString();
+			}
+			else
+			{
+				tbxToken.Text = "An error occurred!";
+				lbnResult.Content = response.ReasonPhrase;
+			}
+
 		}
 
 		private async void RefreshTokenOnClick(object sender, RoutedEventArgs e)
@@ -76,14 +110,14 @@ namespace aps_tookit_auth_3leg_pkce
 				lbnResult.Content = ex.Message;
 			}
 		}
-		private void redirectToLogin(string codeChallenge)
+		private void RedirectToLogin(string codeChallenge)
 		{
 			string[] prefixes =
 			{
 				"http://localhost:8080/api/auth/"
 			};
 			System.Diagnostics.Process.Start($"https://developer.api.autodesk.com/authentication/v2/authorize?response_type=code&client_id={Global.ClientId}&redirect_uri={HttpUtility.UrlEncode(Global.CallbackURL)}&scope=data:read&prompt=login&code_challenge={codeChallenge}&code_challenge_method=S256");
-			SimpleListenerExample(prefixes);
+			_ = SimpleListenerExample(prefixes);
 		}
 		public async Task SimpleListenerExample(string[] prefixes)
 		{
